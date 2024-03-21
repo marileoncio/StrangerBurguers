@@ -11,8 +11,8 @@ interface Lanches {
 
 const dados: Lanches[] = [
     {
-        id: "1", nome: "Will Byers", preco: " R$31,00", ingredientes: "Pão gergelim + Duas carnes 75g + Fatias de Picles" +
-            "Molho de Picles Americano + Alface + Cebola", image: require('../src/assents/images/1.jpeg')
+        id: "1", nome: "Will Byers", preco: " R$31,00", ingredientes: "Pão gergelim + Duas carnes" +
+            " + Fatias de Picles + Alface + Cebola", image: require('../src/assents/images/1.jpeg')
     },
 
     {
@@ -97,6 +97,14 @@ const renderLanches = ({ item }: { item: Lanches }) => (
         <Text>―――――――――――――――――――――</Text>
         <Image source={item.image} style={styles.image} />
 
+        <View style={styles.botoes}>
+            <TouchableOpacity style={styles.carrinho}>
+                <Text style={styles.car}>+🛒</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.carrinho}>
+                <Text style={styles.car}>-🛒</Text>
+            </TouchableOpacity ></View>
+
 
     </TouchableOpacity>
 );
@@ -116,7 +124,8 @@ function StrangerBurguers(): React.JSX.Element {
 
                 </View>
                 <FlatList
-                    showsVerticalScrollIndicator={false}
+
+                    showsHorizontalScrollIndicator={true}
                     data={dados}
                     renderItem={renderLanches}
                     keyExtractor={(item) => item.id}
@@ -161,12 +170,19 @@ function StrangerBurguers(): React.JSX.Element {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
-
     },
+    car: {
+        color: 'white',
+        textAlign: 'center',
+        justifyContent: 'center',
+        fontSize: 20
+    },
+
+    botoes: { flexDirection: "row" },
+
     logo: {
         width: 190,
-        height: 100
+        height: 95
     },
     nomeText: {
         fontSize: 25,
@@ -216,14 +232,24 @@ const styles = StyleSheet.create({
         height: 320,
         borderTopEndRadius: 30,
         borderColor: 'red',
-        marginTop: 10,
+        marginTop: 50,
         borderWidth: 5,
         borderRadius: 20
 
     },
     image2: {
         flex: 52,
-        justifyContent: 'center',
+        justifyContent: 'center'
+    },
+    carrinho: {
+        backgroundColor: 'red',
+        opacity: 10,
+        width: 70,
+        height: 30,
+        marginTop: 10,
+        borderRadius: 10,
+        marginLeft: 10,
+
     }
 })
 
