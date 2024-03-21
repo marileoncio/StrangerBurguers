@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Image, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
 
 interface Lanches{
     id: string,
@@ -57,10 +57,144 @@ const dados: Lanches[] = [
 
 ];
 
+const renderLanches = ({item}: {item: Lanches}) => (
+    <TouchableOpacity style={styles.lanches}>
+        <Text style={styles.nomeText}>{item.nome}</Text>
+        <Text>――――――――――――――</Text>                   
+        <Text style={styles.precoText}>{item.preco}</Text>
+        <Text>―――――――――――――</Text>
+        <Text style={styles.descricaoText}> {item.ingredientes}</Text>
+        <Text>――――――――――――――――――――――――――――</Text>
+        <Image source={item.image} style={styles.image}/>
+        
+
+    </TouchableOpacity>
+);
+
+
 function StrangerBurguers(): React.JSX.Element{
     return(
-        <View>
+        <View style={styles.container}>
+            <ImageBackground source={require('../src/assents/images/fundo.jpg')} resizeMode="cover" style={styles.container}> 
+     
+            <StatusBar backgroundColor= "#D92121" barStyle= "light-content" />
+            <View style={styles.header}>
+
+            <Image source={require('../src/assents/images/fonte2.png')}
+            style={styles.logo}/>
+
+
+ </View> 
+             <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={dados}
+                    renderItem={renderLanches}
+                    keyExtractor={(item) => item.id}
+            />
+            </ImageBackground>
+            
+
+        <View style={styles.footer}>
+            <TouchableOpacity>
+                <Image 
+                source={require('../src/assents/images/home2.png')}
+                style={styles.footerIcon}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+                <Image 
+                source={require('../src/assents/images/menu3.png')}
+                style={styles.footerIcon}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+                <Image 
+                source={require('../src/assents/images/avatar2.png')}
+                style={styles.footerIcon}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+                <Image 
+                source={require('../src/assents/images/sacola.png')}
+                style={styles.footerIcon}/>
+            </TouchableOpacity>
+
 
         </View>
+             
+                
+         </View>
+        
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+
+    
+    },
+    logo:{
+        width: 190,
+        height:100
+    },
+    nomeText:{
+        fontSize:25,
+        fontWeight:'bold',
+        color: 'black'
+
+    },
+    precoText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black'
+    },
+    descricaoText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'black'
+    },
+
+    lanches: {
+        backgroundColor: 'white',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 15,
+        borderWidth: 2
+    },
+    header: {
+        backgroundColor:'black',
+        alignItems: 'center',
+        paddingVertical: 10
+    },
+   
+    footer: {
+        borderTopWidth: 0.2,
+        backgroundColor: 'black',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: 10
+    },
+    footerIcon: {
+        width:32,
+        height: 30
+    },
+    image:{
+        width: 320,
+        height: 320,
+        borderTopEndRadius: 30,
+        borderColor: 'red',
+        marginTop: 10,
+        borderWidth:5,
+        borderRadius: 20
+
+    },
+    image2:{
+    flex: 52,
+    justifyContent: 'center',
+    }
+})
+
+export default StrangerBurguers;
