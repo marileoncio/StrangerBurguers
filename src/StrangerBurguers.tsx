@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
     botoes: { flexDirection: "row" },
 
     logo: {
-        width: 190,
-        height: 95
+        width: 310,
+        height: 150
     },
     nomeText: {
         fontSize: 25,
@@ -228,11 +228,11 @@ const styles = StyleSheet.create({
         height: 30
     },
     image: {
-        width: 320,
-        height: 320,
+        width: 262,
+        height: 262,
         borderTopEndRadius: 30,
         borderColor: 'red',
-        marginTop: 50,
+        marginTop: 25,
         borderWidth: 5,
         borderRadius: 20
 
@@ -248,8 +248,8 @@ const styles = StyleSheet.create({
         height: 30,
         marginTop: 10,
         borderRadius: 10,
-        marginLeft: 10,
-
+        marginLeft: 10
+    
     }
 })
 
