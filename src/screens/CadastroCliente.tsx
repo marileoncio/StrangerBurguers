@@ -1,28 +1,31 @@
 import React, { useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
 
-const CadastroProduto: React.FC = () => {
-    const [produtos, setProdutos] = useState<Produto[]>([]);
+const CadastroCliente: React.FC = () => {
+    const [telefone, setTelefone] = useState<string>('');
     const [nome, setNome] = useState<string>('');
-    const [preco, setPreco] = useState<string>('');
-    const [ingredientes, setIngredientes] = useState<string>('');
+    const [endereco, setEndereco] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [senha, setSenha] = useState<string>('');
     const [imagem, setImagem] = useState<any>('');
 
-    const cadastrarProduto = async() => {
+    const cadastrarCliente = async() => {
         try{
         const formData = new FormData();
         formData.append('nome', nome);
-        formData.append('preco', preco);
-        formData.append('ingredientes', ingredientes);
+        formData.append('telefone', telefone);
+        formData.append('endereco', endereco);
+        formData.append('email', email);
+        formData.append('senha', senha);
         formData.append('imagem', {
             uri: imagem,
             type: 'image/jpeg',
             name: new Date() + '.jpg'
         });
 
-        const response = await axios.post('http://10.137.11.223:8000/api/produtos', formData, {
+        const response = await axios.post('http://10.137.11.223:8000/api/Clientes', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -76,30 +79,39 @@ const CadastroProduto: React.FC = () => {
 
      return(
         <View style={styles.container}>
+
             <StatusBar backgroundColor="red" barStyle="light-content" />
+            <ImageBackground source={require('../src/assents/images/fundo.jpg')} resizeMode="cover" style={styles.container}>
 
             <View style={styles.header}>
-                <Text style={styles.headerText}>Top Food</Text>
+            <Image source={require('../src/assents/images/fonte2.png')}
+                        style={styles.logo} />
             </View>
 
             <View style={styles.form}>
                 <TextInput 
                 style={styles.input}
-                placeholder="Nome do Produto"
+                placeholder="Nome"
                 value={nome}
                 onChangeText={setNome} />
 
                 <TextInput 
                 style={styles.input}
-                placeholder="Preço"
-                value={preco}
-                onChangeText={setPreco} />
+                placeholder="Endereço"
+                value={endereco}
+                onChangeText={setEndereco} />
 
                 <TextInput 
                 style={styles.input}
-                placeholder="Ingredientes"
-                value={ingredientes}
-                onChangeText={setIngredientes} 
+                placeholder="Telefone"
+                value={telefone}
+                onChangeText={setTelefone} />
+
+                <TextInput 
+                style={styles.input}
+                placeholder="E-mail"
+                value={email}
+                onChangeText={setEmail} 
                 multiline/>
 
             <TouchableOpacity style={styles.imageButton} onPress={selecionarImagem}>
@@ -110,8 +122,8 @@ const CadastroProduto: React.FC = () => {
                 <Text style={styles.imageButtonText}>Tirar Foto</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={cadastrarProduto}>
-                <Text style={styles.buttonText}>Cadastrar Produto</Text>
+            <TouchableOpacity style={styles.button} onPress={cadastrarCliente}>
+                <Text style={styles.buttonText}>Cadastrar Cliente</Text>
             </TouchableOpacity>
 
             <View style={styles.alinhamentoImagemSelecionada}>
@@ -119,6 +131,7 @@ const CadastroProduto: React.FC = () => {
             </View>
 
             </View>
+            </ImageBackground>
         </View>
      );
      }
@@ -179,7 +192,11 @@ const CadastroProduto: React.FC = () => {
         buttonText: {
             color: 'white',
             fontWeight: 'bold'
+        },
+        logo: {
+            width: 310,
+            height: 150
         }
 });
 
- export default CadastroProduto;
+ export default CadastroCliente;

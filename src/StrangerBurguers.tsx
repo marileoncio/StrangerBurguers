@@ -130,7 +130,7 @@ function StrangerBurguers(): React.JSX.Element {
                     renderItem={renderLanches}
                     keyExtractor={(item) => item.id}
                 />
-            </ImageBackground>
+         
 
 
             <View style={styles.footer}>
@@ -161,7 +161,7 @@ function StrangerBurguers(): React.JSX.Element {
 
             </View>
 
-
+            </ImageBackground>
         </View>
 
     );
