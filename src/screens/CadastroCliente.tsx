@@ -4,11 +4,13 @@ import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
 
 const CadastroCliente: React.FC = () => {
-    const [telefone, setTelefone] = useState<string>('');
+    //const [Cliente, setCliente] = useState<Cliente[]>([]);
     const [nome, setNome] = useState<string>('');
+    const [telefone, setTelefone] = useState<string>('');
     const [endereco, setEndereco] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const [senha, setSenha] = useState<string>('');
+    const [cpf, setCpf] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const [imagem, setImagem] = useState<any>('');
 
     const cadastrarCliente = async() => {
@@ -18,14 +20,16 @@ const CadastroCliente: React.FC = () => {
         formData.append('telefone', telefone);
         formData.append('endereco', endereco);
         formData.append('email', email);
-        formData.append('senha', senha);
+        formData.append('cpf', cpf);
+        formData.append('password', password);
+
         formData.append('imagem', {
             uri: imagem,
             type: 'image/jpeg',
             name: new Date() + '.jpg'
         });
 
-        const response = await axios.post('http://10.137.11.223:8000/api/Clientes', formData, {
+        const response = await axios.post('http://10.137.11.223:8000/api/cliente', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -79,19 +83,22 @@ const CadastroCliente: React.FC = () => {
 
      return(
         <View style={styles.container}>
-
-            <StatusBar backgroundColor="red" barStyle="light-content" />
-            <ImageBackground source={require('../src/assents/images/fundo.jpg')} resizeMode="cover" style={styles.container}>
+            <StatusBar backgroundColor="black" barStyle="light-content" />
 
             <View style={styles.header}>
-            <Image source={require('../src/assents/images/fonte2.png')}
+            <Image source={require('../assents/images/fonte2.png')}
                         style={styles.logo} />
             </View>
 
+            <ImageBackground source={require('../assents/images/fundo.jpg')} resizeMode="cover" style={styles.container}>
+
+            <View>
+                <Text style={styles.store}>Cadastro Cliente</Text>
+            </View>
             <View style={styles.form}>
                 <TextInput 
                 style={styles.input}
-                placeholder="Nome"
+                placeholder="Nome do Cliente"
                 value={nome}
                 onChangeText={setNome} />
 
@@ -109,9 +116,21 @@ const CadastroCliente: React.FC = () => {
 
                 <TextInput 
                 style={styles.input}
-                placeholder="E-mail"
+                placeholder="Email"
                 value={email}
-                onChangeText={setEmail} 
+                onChangeText={setEmail} />
+
+                <TextInput 
+                style={styles.input}
+                placeholder="CPF"
+                value={cpf}
+                onChangeText={setCpf} />
+
+                <TextInput 
+                style={styles.input}
+                placeholder="Senha"
+                value={password}
+                onChangeText={setPassword} 
                 multiline/>
 
             <TouchableOpacity style={styles.imageButton} onPress={selecionarImagem}>
@@ -131,7 +150,7 @@ const CadastroCliente: React.FC = () => {
             </View>
 
             </View>
-            </ImageBackground>
+        </ImageBackground>
         </View>
      );
      }
@@ -140,38 +159,47 @@ const CadastroCliente: React.FC = () => {
             flex: 1
         },
         header: {
-            backgroundColor: 'red',
+            backgroundColor: 'black',
             paddingVertical: 10,
             alignItems: 'center'
         },
         headerText: {
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: 'white'
+            backgroundColor: 'white',
+            padding: 20,
+            marginVertical: 8,
+            marginHorizontal: 16,
+            borderRadius: 15,
+            borderWidth: 2,
+            fontWeight: 'bold'
         },
         form:{
-            padding: 10,
-            backgroundColor: '#f0f0f0',
-            marginBottom: 10
+            marginTop: 12,
+            padding: 30,
+            backgroundColor: '#f4f3ee',
+            marginBottom: 20,
+            borderRadius: 25
+
         },
         input:{
             height: 40,
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginBottom: 10,
-            paddingHorizontal: 10,
-            borderRadius: 10
+            borderColor: 'black',
+            borderWidth: 2,
+            marginBottom: 6,
+            paddingHorizontal: 20,
+            borderRadius: 20
         },
         imageButton: {
             backgroundColor: 'red',
             padding: 10,
-            borderRadius: 5,
+            borderRadius: 20,
             alignItems: 'center',
-            marginBottom: 10
+            marginBottom: 10,
+            
         },
         imageButtonText: {
             color: 'white',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            borderRadius: 20
         },
         imagemSelecionada: {
             width: 200,
@@ -186,7 +214,7 @@ const CadastroCliente: React.FC = () => {
         button:{
             backgroundColor: 'red',
             padding: 10,
-            borderRadius: 5,
+            borderRadius: 20,
             alignItems: 'center'
         },
         buttonText: {
@@ -194,8 +222,24 @@ const CadastroCliente: React.FC = () => {
             fontWeight: 'bold'
         },
         logo: {
-            width: 310,
-            height: 150
+            width: 210,
+            height: 100
+        },
+        store:{
+            width: 252,
+            height: 50,
+            borderRadius: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+            color: '#d90429',
+            marginTop: 15,
+            fontWeight: 'bold',
+            paddingHorizontal: 20,
+            marginRight: 'auto',
+            marginLeft: 'auto',
+            fontSize: 28,
+            marginVertical: 5
+        
         }
 });
 
