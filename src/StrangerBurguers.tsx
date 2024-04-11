@@ -130,36 +130,36 @@ function StrangerBurguers(): React.JSX.Element {
                     renderItem={renderLanches}
                     keyExtractor={(item) => item.id}
                 />
-         
 
 
-            <View style={styles.footer}>
-                <TouchableOpacity>
-                    <Image
-                        source={require('../src/assents/images/home2.png')}
-                        style={styles.footerIcon} />
-                </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Image
-                        source={require('../src/assents/images/menu3.png')}
-                        style={styles.footerIcon} />
-                </TouchableOpacity>
+                <View style={styles.footer}>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../src/assents/images/home2.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Image
-                        source={require('../src/assents/images/avatar2.png')}
-                        style={styles.footerIcon} />
-                </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../src/assents/images/menu3.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Image
-                        source={require('../src/assents/images/sacola.png')}
-                        style={styles.footerIcon} />
-                </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../src/assents/images/avatar2.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../src/assents/images/sacola.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
 
 
-            </View>
+                </View>
 
             </ImageBackground>
         </View>
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderRadius: 10,
         marginLeft: 10
-    
+
     }
 })
 
