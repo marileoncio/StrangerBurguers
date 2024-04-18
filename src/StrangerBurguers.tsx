@@ -1,93 +1,9 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
 
-interface Lanches {
-    id: string,
-    nome: string,
-    preco: string,
-    ingredientes: string;
-    image: any;
-}
 
-const dados: Lanches[] = [
-    {
-        id: "1", nome: "Will Byers", preco: " R$31,00", ingredientes: "Pão gergelim + Duas carnes" +
-            " + Fatias de Picles + Alface + Cebola", image: require('../src/assents/images/1.jpeg')
-    },
-
-    {
-        id: "2", nome: "Onze", preco: "R$34,00", ingredientes: "Pão Brioche + Hambuger 150g + Fatias de Cheddar" +
-            "Cebola Caramelizada + Fatias de Bacon + Tomate + Rúcula + Maionese", image: require('../src/assents/images/2.jpeg')
-    },
-
-    {
-        id: "3", nome: "Mike Wheeler", preco: "R$28,00", ingredientes: "Pão com Gergelim + Hamburguer de carne Bovina (150g) " +
-            "Fatias de Bacon + Queijo Mussarela + Orégano + Molho especial (Alface, tomate e cebola)", image: require('../src/assents/images/3.jpeg')
-    },
-
-    {
-        id: "4", nome: "Lucas Sinclair", preco: "R$26,00", ingredientes: "Pão com Gergelim + Filé de Frango + Fatias de Bacon" +
-            "Queijo Mussarela + Orégano + Molho Especial (Alface, Tomate e Cebola)", image: require('../src/assents/images/4.jpeg')
-    },
-
-    {
-        id: "5", nome: "Erica Sinclair", preco: "R$25,00", ingredientes: "Pão com Gergelim + Hamburguer de carne bovina (150g) + Queijo Mussarela " +
-            "Orégano + Alface + Tomate + cebola + Molho especial", image: require('../src/assents/images/5.jpeg')
-    },
-
-    {
-        id: "6", nome: "Dustin Henderson", preco: "R$27,00", ingredientes: "Pão com Gergelim + Hamburguer de carne bovina (150g)" +
-            "Queijo Crispy + Queijo Mussarela + Orégano + Molho especial (Alface, tomate e cebola)", image: require('../src/assents/images/6.jpeg')
-    },
-
-    {
-        id: "7", nome: "Max", preco: "R$38,00", ingredientes: "Pão brioche + 02 carnes de75g + Tomate seco" +
-            " Rucula + Fatias de cheddar + Cebola + Maionese", image: require('../src/assents/images/7.jpeg')
-    },
-
-    {
-        id: "8", nome: "Steve Harrington ", preco: "R$37,00", ingredientes: "Pão Brioche + Duas carnes 150g + Fatias de Cheddar" +
-            "Cebola + Fatias de Picles + Maionese + Ketchup + Mostarda", image: require('../src/assents/images/8.jpeg')
-    },
-
-    {
-        id: "9", nome: "Nancy Wheeler", preco: "R$26,00", ingredientes: "Pão Brioche + Hamburguer de Carne Bovina (150g)" +
-            "Cebola Caramelizada + Fatias de Cheddar + Maionese", image: require('../src/assents/images/9.jpeg')
-    },
-
-    {
-        id: "10", nome: "Vecna", preco: "R$35,00", ingredientes: "Pão Brioche + Duas carnes 75g" +
-            "Fatias de Bacon + Fatias de Cheddar + Maionese", image: require('../src/assents/images/10.jpeg')
-    },
-
-    {
-        id: "11", nome: "Jin Hopper", preco: "R$22,00", ingredientes: "Pão com Gergelim + Hamburguer 75g + Queijo Mussarela" +
-            "Orégano + Alface + Tomate + cebola + Molho especial", image: require('../src/assents/images/11.jpeg')
-    },
-
-    {
-        id: "12", nome: "Joyce Byers", preco: "R$30,00", ingredientes: "Pão com Gergelim + Filé de Frango + Creme de Cheddar + Fatias de Bacon" +
-            "Queijo Mussarela + Orégano + Molho Especial (Alface, Tomate e Cebola)", image: require('../src/assents/images/12.jpeg')
-    },
-
-    {
-        id: "13", nome: "Robin", preco: "R$31,00", ingredientes: "Pão Gergelim + Hamburguer Vegetariano + Mussarela" +
-            "Oregano + Tomate + Alface + Pimenta Biquinho + Maionese Defumada", image: require('../src/assents/images/13.jpeg')
-    },
-
-    {
-        id: "14", nome: "Mundo Invertido", preco: "R$29,00", ingredientes: "Pão Brioche + Hambuger 75g + Fatias de Cheddar + Cebola Caramelizada" +
-            "Fatias de Bacon + Tomate + Rúcula + Maionese", image: require('../src/assents/images/14.jpeg')
-    },
-
-    {
-        id: "15", nome: "Hawkings", preco: "R$28,00", ingredientes: "Pão com Gergelim + Hamburguer de carne Bovina ( 75g) + Creme de Cheddar " +
-            "Fatias de Bacon + Queijo Mussarela + Orégano + Molho especial (Alface, tomate e cebola)", image: require('../src/assents/images/15.jpeg')
-    },
-
-];
-
-const renderLanches = ({ item }: { item: Lanches }) => (
+const renderLanches = ({ item }: { item: Produto }) => (
     <TouchableOpacity style={styles.lanches}>
         <Text style={styles.nomeText}>{item.nome}</Text>
         <Text>――――――――――――――</Text>
@@ -95,7 +11,7 @@ const renderLanches = ({ item }: { item: Lanches }) => (
         <Text>――――――――――――――――――――</Text>
         <Text style={styles.descricaoText}> {item.ingredientes}</Text>
         <Text>―――――――――――――――――――――</Text>
-        <Image source={item.image} style={styles.image} />
+        <Image source={item.imagem} style={styles.image} />
 
         <View style={styles.botoes}>
             <TouchableOpacity style={styles.carrinho}>
@@ -109,8 +25,28 @@ const renderLanches = ({ item }: { item: Lanches }) => (
     </TouchableOpacity>
 );
 
-
 function StrangerBurguers(): React.JSX.Element {
+
+    const [produtos, setProduto] = useState<Produto[]>([]);
+    const [erro, setErro] = useState<string>("");
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get('http://10.137.11.223:8000/api/produto');
+                setProduto(response.data);
+                console.log(response.data);
+                
+            } catch (error) {
+                setErro("Ocorreu um erro");
+                console.log(error)
+            }
+        }
+        fetchData();
+    }, []);
+
+
+
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../src/assents/images/fundo.jpg')} resizeMode="cover" style={styles.container}>
@@ -124,11 +60,11 @@ function StrangerBurguers(): React.JSX.Element {
 
                 </View>
                 <FlatList
-
                     showsHorizontalScrollIndicator={true}
-                    data={dados}
-                    renderItem={renderLanches}
+                    data={produtos}
                     keyExtractor={(item) => item.id}
+                    renderItem={renderLanches}
+                   
                 />
 
 
