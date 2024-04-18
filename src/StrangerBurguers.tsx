@@ -2,33 +2,20 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
 
-
-const renderLanches = ({ item }: { item: Produto }) => (
-    <TouchableOpacity style={styles.lanches}>
-        <Text style={styles.nomeText}>{item.nome}</Text>
-        <Text>――――――――――――――</Text>
-        <Text style={styles.precoText}>{item.preco}</Text>
-        <Text>――――――――――――――――――――</Text>
-        <Text style={styles.descricaoText}> {item.ingredientes}</Text>
-        <Text>―――――――――――――――――――――</Text>
-        <Image source={item.imagem} style={styles.image} />
-
-        <View style={styles.botoes}>
-            <TouchableOpacity style={styles.carrinho}>
-                <Text style={styles.car}>+🛒</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.carrinho}>
-                <Text style={styles.car}>-🛒</Text>
-            </TouchableOpacity ></View>
-
-
-    </TouchableOpacity>
-);
+interface Produto {
+    id: string;
+    nome: string;
+    preco: string;
+    ingredientes: string,
+    imagem: any;
+}
 
 function StrangerBurguers(): React.JSX.Element {
 
     const [produtos, setProduto] = useState<Produto[]>([]);
     const [erro, setErro] = useState<string>("");
+    const [carrinho, setCarrinho] = useState<{ [key: string]: number }>({});
+    const [mensagemSucesso, setMensagemSucesso] = useState('');
 
     useEffect(() => {
         async function fetchData() {
@@ -45,7 +32,48 @@ function StrangerBurguers(): React.JSX.Element {
         fetchData();
     }, []);
 
+    const adicionarAoCarrinho = (item: Produto) => {
+        if (carrinho[item.id]) {
+          setCarrinho({ ...carrinho, [item.id]: carrinho[item.id] + 1 });
+        } else {
+          setCarrinho({ ...carrinho, [item.id]: 1 });
+        }
+        setMensagemSucesso('Produto adicionado com sucesso');
+        return carrinho;
+      };
 
+      const removerCarrinho = (item: Produto ) => {
+        if(carrinho[item.id]) {
+            setCarrinho({... carrinho, [item.id]: carrinho[item.id] - 1});
+        } else {
+            setCarrinho({...carrinho, [item.id]: 1});
+            return carrinho;
+        }
+      };
+    
+      const totalCarrinho = Object.values(carrinho).reduce((total, quantidade) => total + quantidade, 0);
+
+
+const renderLanches = ({ item }: { item: Produto }) => (
+    <TouchableOpacity style={styles.lanches}>
+        <Text style={styles.nomeText}>{item.nome}</Text>
+        <Text>――――――――――――――</Text>
+        <Text style={styles.precoText}>{item.preco}</Text>
+        <Text>――――――――――――――――――――</Text>
+        <Text style={styles.descricaoText}> {item.ingredientes}</Text>
+        <Text>―――――――――――――――――――――</Text>
+        <Image source={item.imagem} style={styles.image} />
+
+        <TouchableOpacity onPress={() => adicionarAoCarrinho(item)} style={styles.buttom}>
+            <Image source={require('../src/assents/images/adicionar-ao-carrinho.png')} style={styles.carrinho}></Image>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => removerCarrinho(item)}>
+        <Image source={require('../src/assents/images/remover-do-carrinho.png')} style={styles.carrinho2}></Image>
+        </TouchableOpacity>
+
+
+    </TouchableOpacity>
+);
 
     return (
         <View style={styles.container}>
@@ -56,7 +84,6 @@ function StrangerBurguers(): React.JSX.Element {
 
                     <Image source={require('../src/assents/images/fonte2.png')}
                         style={styles.logo} />
-
 
                 </View>
                 <FlatList
@@ -92,6 +119,11 @@ function StrangerBurguers(): React.JSX.Element {
                         <Image
                             source={require('../src/assents/images/sacola.png')}
                             style={styles.footerIcon} />
+                        {totalCarrinho > 0 && (
+                <View style={styles.carrinhoBadge}>
+               <Text style={styles.carrinhoBadgeText}>{totalCarrinho}</Text>
+                 </View>
+                 )}
                     </TouchableOpacity>
 
 
@@ -113,8 +145,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontSize: 20
     },
-
-    botoes: { flexDirection: "row" },
 
     logo: {
         width: 310,
@@ -177,16 +207,44 @@ const styles = StyleSheet.create({
         flex: 52,
         justifyContent: 'center'
     },
+    mensagemSucessoText: {
+        color: '#155724',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    buttom: {
+        flexDirection: "row",
+    },
     carrinho: {
-        backgroundColor: 'red',
         opacity: 10,
-        width: 70,
+        width: 30,
         height: 30,
-        marginTop: 10,
+        marginLeft: 10,
+        marginTop: 4
+    },
+    carrinho2:{
+        opacity: 10,
+        width: 30,
+        height: 30,
+        marginLeft: 60,
+        marginTop: -30
+    },
+    carrinhoBadge: {
+        position: "absolute",
+        right: -6,
+        top: -3,
+        backgroundColor: "#2E8B57",
         borderRadius: 10,
-        marginLeft: 10
+        width: 20,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      carrinhoBadgeText: {
+        color: "white",
+        fontWeight: "bold",
+      },
 
-    }
-})
+});
 
 export default StrangerBurguers;
