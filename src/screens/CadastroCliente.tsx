@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image, ImageBackground, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
+import { useNavigation } from "@react-navigation/native";
 
 const CadastroCliente: React.FC = () => {
     //const [Cliente, setCliente] = useState<Cliente[]>([]);
@@ -81,6 +82,8 @@ const CadastroCliente: React.FC = () => {
         });
     }
 
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -150,8 +153,28 @@ const CadastroCliente: React.FC = () => {
                         <View style={styles.alinhamentoImagemSelecionada}>
                             {imagem ? <Image source={{ uri: imagem }} style={styles.imagemSelecionada} /> : null}
                         </View>
+                          </View>
 
-                    </View>
+                          <View style={styles.footer}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('CadastroProduto')}>
+                        <Image
+                            source={require('../src/assents/images/home2.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=> navigation.navigate('StrangerBurguers')}>
+                        <Image
+                            source={require('../src/assents/images/menu3.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=>navigation.navigate('CadastroCliente')}>
+                        <Image
+                            source={require('../src/assents/images/avatar2.png')}
+                            style={styles.footerIcon} />
+                    </TouchableOpacity>
+                     </View>
+
                 </ImageBackground>
             </ScrollView>
         </View>
@@ -246,6 +269,18 @@ const styles = StyleSheet.create({
         fontSize: 28,
         marginVertical: 5
 
+    },
+    footer: {
+        borderTopWidth: 0.2,
+        backgroundColor: 'black',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: 10
+    },
+    footerIcon: {
+        width: 32,
+        height: 30
     }
 });
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 interface Produto {
     id: string;
@@ -75,6 +76,8 @@ const renderLanches = ({ item }: { item: Produto }) => (
     </TouchableOpacity>
 );
 
+    const navigation = useNavigation();   
+        
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../src/assents/images/fundo.jpg')} resizeMode="cover" style={styles.container}>
@@ -97,19 +100,19 @@ const renderLanches = ({ item }: { item: Produto }) => (
 
 
                 <View style={styles.footer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.navigate('CadastroProduto')}>
                         <Image
                             source={require('../src/assents/images/home2.png')}
                             style={styles.footerIcon} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navigation.navigate('StrangerBurguers')}>
                         <Image
                             source={require('../src/assents/images/menu3.png')}
                             style={styles.footerIcon} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.navigate('CadastroCliente')}>
                         <Image
                             source={require('../src/assents/images/avatar2.png')}
                             style={styles.footerIcon} />
